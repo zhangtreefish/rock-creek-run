@@ -1,6 +1,15 @@
 {
+	"scripts": {
+		"test": "gulp test",
+		"test-kitten": "mocha -R nyan test.js",
+		"watch": "gulp watch"
+	},
 	"dependencies": {
 		"underscore": "1.8.3",
-		"mongodb": "2.1.21"
+		"mongodb": "2.1.21",
+		"async": "0.9.0",
+		"mocha": "2.2.4",
+		"gulp": "3.8.11",
+		"gulp-mocha": "2.0.1"
 	}
 }
