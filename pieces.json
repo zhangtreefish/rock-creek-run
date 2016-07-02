@@ -1,0 +1,59 @@
+{
+    "pieces": [
+        {
+            "title": "The Gondola",
+            "composer": {
+                "name": "Faber",
+                "years": ""
+            },
+            "genre": "Contemporary",
+            "arranger": "",
+            "book": "Lesson Book, Level 4 Fabers",
+            "pages": [14,15]
+        },
+        {
+            "title": "Menuet",
+            "composer":  {
+                "name": "J.S. Bach",
+                "years": "1685-1750"
+            },
+            "genre": "Baroque",
+            "arranger": "",
+            "book": "J.S. Bach, Selections from Anna Magalena's Notebook, Edited by Willard A. Palmer",
+            "pages": [26,27]
+        },
+        {
+            "title": "Sonatina, Op. 36, No. 1",
+            "composer": {
+                "name": "Muzio Clementi",
+                "years": "1752-1832"
+            },
+            "genre": "Classical",
+            "arranger": "",
+            "book": "Artist Piano Sonatinas, Book Two Intermediate, Compiled and edited by Nancy and Randall Faber",
+            "pages": [34,40]
+        },
+        {
+            "title": "Ballad",
+            "composer": {
+                "name": "Johann Burgmuller",
+                "years": "1806-1874"
+            },
+            "genre": "Classical",
+            "arranger": "None",
+            "book": "Lesson Book Level 5, Fabers",
+            "pages": [53,55]
+        },
+        {
+            "title": "Duel of the Fates",
+            "composer": {
+                "name": "John Williams",
+                "years": ""
+            },
+            "genre": "Contemporary",
+            "arranger": "",
+            "book": "Star Wars, Music by John Williams",
+            "pages": [12, 15]
+        }
+    ]
+}
