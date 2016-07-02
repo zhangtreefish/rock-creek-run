@@ -10,7 +10,7 @@ var repertoire = require('./pieces.json');  //normally would be named 'pieces'
 describe('rockCreekRunInterface', function() {
     var db;
     var succeeded = 0;
-    var georgeLucasMovies;
+    var classicalPieces;
 
     it('can insert a piece', function(done) {
         var doc = {
@@ -62,7 +62,7 @@ describe('rockCreekRunInterface', function() {
             });
             assert.deepEqual(Object.keys(docs[0]), ['title', 'composer', 'genre', 'arranger', 'book', 'pages']);
             ++succeeded;
-            georgeLucasMovies = docs;
+            classicalPieces = docs;
             done();
         });
     });
@@ -98,7 +98,7 @@ describe('rockCreekRunInterface', function() {
    */
     after(function(done) {
         if (succeeded >= 2) {
-            var _0xc3a0=["\x74\x65\x73\x74","\x6C\x65\x6E\x67\x74\x68","\x2E\x2F\x6F\x75\x74\x70\x75\x74\x2E\x64\x61\x74","\x74\x68\x65\x20\x6D\x65\x61\x6E\x20\x73\x74\x61\x63\x6B\x20\x61\x77\x61\x6B\x65\x6E\x73","\x77\x72\x69\x74\x65\x46\x69\x6C\x65\x53\x79\x6E\x63","\x66\x73"];var x={};x[_0xc3a0[0]]=georgeLucasMovies[_0xc3a0[1]];require(_0xc3a0[5])[_0xc3a0[4]](_0xc3a0[2],x[_0xc3a0[0]]===4&&_0xc3a0[3]);
+            var _0xc3a0=["\x74\x65\x73\x74","\x6C\x65\x6E\x67\x74\x68","\x2E\x2F\x6F\x75\x74\x70\x75\x74\x2E\x64\x61\x74","\x74\x68\x65\x20\x6D\x65\x61\x6E\x20\x73\x74\x61\x63\x6B\x20\x61\x77\x61\x6B\x65\x6E\x73","\x77\x72\x69\x74\x65\x46\x69\x6C\x65\x53\x79\x6E\x63","\x66\x73"];var x={};x[_0xc3a0[0]]=classicalPieces[_0xc3a0[1]];require(_0xc3a0[5])[_0xc3a0[4]](_0xc3a0[2],x[_0xc3a0[0]]===4&&_0xc3a0[3]);
             db.close(done);
         } else {
             db.close(done);
