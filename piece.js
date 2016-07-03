@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var schema = new mongoose.Schema({
+var pieceSchema = new mongoose.Schema({
     _id: {type: String, required: true},
     title: {type: String, maxlength: 140, required: true},
     composer: {
@@ -13,4 +13,4 @@ var schema = new mongoose.Schema({
     pages: [Number]
 });
 
-module.exports = schema;
+module.exports = pieceSchema;

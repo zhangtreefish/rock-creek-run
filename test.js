@@ -92,10 +92,11 @@ describe('rockCreekRunInterface', function() {
 
 //this suite tests Student, Lesson, and Piece Mongoose schemas
 var assert = require('assert');
-var pieceSchema = require('./piece');
 var fs = require('fs');
 var mongoose = require('mongoose');
+var pieceSchema = require('./piece');
 var studentSchema = require('./student');
+var lessonSchema = require('./lesson');
 
 describe('Mongoose Schemas', function() {
   var Piece = mongoose.model('Piece', pieceSchema, 'pieces');

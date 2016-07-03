@@ -1,25 +1,28 @@
 var mongoose = require('mongoose');
 
-var schema = new mongoose.Schema({
+var pieceSchema = require('./piece');
+var lessonSchema = require('./lesson');
+
+var studentSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    pieces: [{ type: String, ref: 'Piece' }],
-    lessons: [{
+    schedule: [{
         length: Number,
         day: String,
         time: String,
         price: Number
     }],
-    notes: [{ type: String, ref: 'Note' }]
+    pieces: [pieceSchema],
+    lessons: [lessonSchema]
 });
 
-schema.virtual('firstName').get(function() {
+studentSchema.virtual('firstName').get(function() {
     var split = this.name.split(' ');
     return split[0];
 });
 
-schema.virtual('lastName').get(function() {
+studentSchema.virtual('lastName').get(function() {
     var split = this.name.split(' ');
     return split.splice(-1).pop();
 });
 
-module.exports = schema;
+module.exports = studentSchema;
