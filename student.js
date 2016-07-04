@@ -4,6 +4,7 @@ var pieceSchema = require('./piece');
 var lessonSchema = require('./lesson');
 
 var studentSchema = new mongoose.Schema({
+    _id: Number,
     name: { type: String, required: true },
     schedule: [{
         length: Number,
@@ -11,8 +12,12 @@ var studentSchema = new mongoose.Schema({
         time: String,
         price: Number
     }],
-    pieces: [pieceSchema],
-    lessons: [lessonSchema]
+    data: {
+        oauth: { type: String, required: true },
+        pieces: [pieceSchema],
+        lessons: [{type: mongoose.Schema.Types.ObjectId, ref: 'Lesson'}],
+        videos: [{type: String, match: /^http:\/\//i}]
+    }
 });
 
 studentSchema.virtual('firstName').get(function() {

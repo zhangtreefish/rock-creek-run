@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var genreSchema = require('./genre');
 
 var pieceSchema = new mongoose.Schema({
     _id: {type: String, required: true},
@@ -7,10 +8,14 @@ var pieceSchema = new mongoose.Schema({
         name: {type: String, maxlength: 140, required: true},
         years: String
     },
-    genre: {type: String, required: true},
+    _genre: {type: genreSchema, ref: 'Genre'},
     arranger: String,
-    book: {type: String, required: true},
-    pages: [Number]
+    book: {
+        title: {type: String, required: true},
+        image: {type: String, required: true, match: /^http:\/\//i }
+    },
+    videos: [String],
+    players : [{ type: String, ref: 'Student' }]
 });
 
 module.exports = pieceSchema;
