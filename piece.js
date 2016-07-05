@@ -8,7 +8,7 @@ var pieceSchema = new mongoose.Schema({
         name: {type: String, maxlength: 140, required: true},
         years: String
     },
-    _genre: {type: genreSchema, ref: 'Genre'},
+    _genre: {type: genreSchema, ref: 'Genre'}, //TODO:what about genre: Genre.genreSchema?
     arranger: String,
     book: {
         title: {type: String, required: true},

@@ -16,7 +16,17 @@ var studentSchema = new mongoose.Schema({
         oauth: { type: String, required: true },
         pieces: [pieceSchema],
         lessons: [{type: mongoose.Schema.Types.ObjectId, ref: 'Lesson'}],
-        videos: [{type: String, match: /^http:\/\//i}]
+        videos: [{type: String, match: /^http:\/\//i}],
+        cart: [{
+            product: {
+                type: mongoose.Schema.Types.ObjectId
+            },
+            quantity: {
+                type: Number,
+                default: 1,
+                min: 1
+            }
+        }]
     }
 });
 
