@@ -1,24 +1,25 @@
 var gulp = require('gulp');
 var mocha = require('gulp-mocha');
+var fs = require('fs');
 
-gulp.task('test', function() {
-    var error = false;
+gulp.task('schemas', function() {
+    var err = false;
     gulp.
-        src('./test.js').
-        pipe(mocha()).
-        on('error', function() {
-        console.log('Tests failed!');
-        error = true;
+    src('./test-schemas.js').
+    pipe(mocha({reporter: 'nyan'})).
+    on('error', function() {
+        console.log('Tests failed!', error);
+        err = true;
+        this.emit('end');
     }).
     on('end', function() {
-        if (!error) {
-            console.log('Tests succeeded! Enter the below code:\n' +
-            require('fs').readFileSync('./output.dat'));
+        if (!err) {
+            console.log('Tests succeeded!');
             process.exit(0);
         }
     });
 });
 
 gulp.task('watch', function() {
-    gulp.watch(['./*.js'], ['test']);
+    gulp.watch(['./*.js'], ['schemas']);
 });

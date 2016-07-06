@@ -1,4 +1,4 @@
-var Category = require('./category');
+//var Category = require('./category');
 var mongoose = require('mongoose');
 
 module.exports = function(db, fx) {
