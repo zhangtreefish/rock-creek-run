@@ -12,7 +12,7 @@ var genreSchema = new mongoose.Schema({
     }]
 });
 
-module.exports.genreSchema = genreSchema;
+module.exports = genreSchema;
 
 // module.exports = new mongoose.Schema(genreSchema);
 // module.exports.genreSchema = genreSchema;

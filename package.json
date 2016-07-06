@@ -1,10 +1,13 @@
 {
     "scripts": {
         "test-gulp": "gulp test",
-        "test-kitten": "mocha -R nyan test.js",
+        "test-kitten-schemas": "mocha -R nyan test-schemas.js",
         "watch": "gulp watch",
         "check-credentials": "mocha part1.js",
-        "test": "mocha test.js"
+        "test": "mocha test.js",
+        "test-genre": "mocha test-genre.js",
+        "test-schemas": "mocha test-schemas.js",
+        "test-interface": "mocha test-interface.js"
     },
     "dependencies": {
         "underscore": "1.8.3",
