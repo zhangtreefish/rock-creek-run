@@ -1,5 +1,9 @@
 var mongoose = require('mongoose');
 var _ = require('underscore');
+var pieceSchema = require('./piece');
+var studentSchema = require('./student');
+var lessonSchema = require('./lesson');
+var genreSchema = require('./genre');
 
 module.exports = function(wagner) {
   mongoose.connect('mongodb://localhost:27017/test');
@@ -9,13 +13,15 @@ module.exports = function(wagner) {
   });
 
   var Genre =
-    mongoose.model('Genre', require('./genre'), 'genres');
+    mongoose.model('Genre', genreSchema, 'genres');
   var Student =
-    mongoose.model('Student', require('./student'), 'students');
+    mongoose.model('Student', studentSchema, 'students');
+  var Piece = mongoose.model('Piece', pieceSchema, 'pieces');
 
   var models = {
     Genre: Genre,
-    Student: Student
+    Student: Student,
+    Piece: Piece
   };
 
   // To ensure DRY-ness, register factories in a loop
@@ -25,7 +31,7 @@ module.exports = function(wagner) {
     });
   });
 
-  wagner.factory('Piece', require('./piece'));
+  //wagner.factory('Piece', require('./piece'));
   wagner.factory('Product', require('./product'));
 
   return models;

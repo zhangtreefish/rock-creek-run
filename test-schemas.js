@@ -5,10 +5,14 @@ var mongoose = require('mongoose');
 var pieceSchema = require('./piece');
 var studentSchema = require('./student');
 var lessonSchema = require('./lesson');
+var wagner = require('wagner-core');
 
 describe('Mongoose Schemas', function() {
-  var Piece = mongoose.model('Piece', pieceSchema, 'pieces');
-  var Student = mongoose.model('Student', studentSchema, 'students');
+   var  models = require('./models')(wagner);
+  //var Piece = mongoose.model('Piece', pieceSchema, 'pieces');
+  //var Student = mongoose.model('Student', studentSchema, 'students');
+  var Student = models.Student;
+  var Piece = models.Piece;
   var succeeded = 0;
   var piece;
 
