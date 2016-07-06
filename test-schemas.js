@@ -31,18 +31,18 @@ describe('Mongoose Schemas', function() {
   describe('Piece', function() {
     it('has a title field that is a required string', function(done) {
       var piece = new Piece({
-        _id: "certain song",
-        title: "Imagine",
-        composer: {
-            name: 'J Lenon',
-            years: '1960?'
-        },
-        _genre: "Contemporary",
+        // _id: "certain song",
+        // title: "Imagine",
+        // composer: {
+        //     name: 'J Lenon',
+        //     years: '1960?'
+        // },
+        // _genre: "Contemporary",
 
-        book: {
-            title: "that book",
-            image: "http://i.imgur.com/yyR3ZmX.png"
-        },
+        // book: {
+        //     title: "that book",
+        //     image: "http://i.imgur.com/yyR3ZmX.png"
+        // },
       });
 
       piece.validate(function(err) {
@@ -73,10 +73,10 @@ describe('Mongoose Schemas', function() {
 
       piece.validate(function(err) {
         assert.ok(err);
-        assert.equal(err.errors['genre'].kind, 'required');
+        assert.equal(err.errors['_genre'].kind, 'required');
 
-        piece.genre = 'Indian';
-        assert.equal(piece.genre, 'Indian');
+        piece._genre = 'Indian';
+        assert.equal(piece._genre, 'Indian');
         ++succeeded;
         done();
       });

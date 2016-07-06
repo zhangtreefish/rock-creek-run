@@ -14,5 +14,5 @@ var genreSchema = new mongoose.Schema({
 
 module.exports.genreSchema = genreSchema;
 
-// module.exports = new mongoose.Schema(categorySchema);
-// module.exports.categorySchema = categorySchema;
+// module.exports = new mongoose.Schema(genreSchema);
+// module.exports.genreSchema = genreSchema;
