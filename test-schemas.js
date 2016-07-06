@@ -1,4 +1,4 @@
-//this suite tests Student, Lesson, and Piece Mongoose schemas
+//this suite tests Student, Lesson, Product, and Piece Mongoose schemas
 var assert = require('assert');
 var fs = require('fs');
 var mongoose = require('mongoose');
@@ -11,22 +11,19 @@ describe('Mongoose Schemas', function() {
   models = require('./models')(wagner);
   Student = models.Student;
   Piece = models.Piece;
-  var succeeded = 0;
-  var piece;
+  Lesson = models.Lesson;
+
+  //var piece;
 
   describe('Student', function() {
     it('has a `firstName` virtual', function() {
       var student = new Student({ name: 'Hay Rue Forest' });
-
       assert.equal(student.firstName, 'Hay');
-      ++succeeded;
     });
 
     it('has a `lastName` virtual', function() {
       var student = new Student({ name: 'Dun Dee Land' });
-
       assert.equal(student.lastName, 'Land');
-      ++succeeded;
     });
   });
 
@@ -63,8 +60,6 @@ describe('Mongoose Schemas', function() {
         piece.validate(function(err) {
           assert.ok(err);
           assert.equal(err.errors['title'].kind, 'maxlength');
-
-          ++succeeded;
           done();
         });
       });
@@ -79,23 +74,24 @@ describe('Mongoose Schemas', function() {
 
         piece._genre = 'Indian';
         assert.equal(piece._genre, 'Indian');
-        ++succeeded;
         done();
       });
     });
+  });
 
-    // it('has a `requirements` field containing array of piece numbers', function() {
-    //   piece = new Piece({
-    //     _id: 'CS-102',
-    //     requirements: ['CS-101']
-    //   });
+  describe('Lesson', function() {
+    it('has a `notes` field containing array of strings', function() {
+      var lesson = new Lesson({
+        date: Date.now,
+        notes: ['Record next week'],
+        title: "Ballad"
+      });
 
-    //   assert.equal(piece.requirements.length, 1);
-    //   piece.requirements.push('MATH-101');
-    //   assert.equal(piece.requirements.length, 2);
-    //   assert.equal(piece.requirements[0], 'CS-101');
-    //   assert.equal(piece.requirements[1], 'MATH-101');
-    //   ++succeeded;
-    // });
+      assert.equal(lesson.notes.length, 1);
+      lesson.notes.push('w/ pedal');
+      assert.equal(lesson.notes.length, 2);
+      assert.equal(lesson.notes[0], 'Record next week');
+      assert.equal(lesson.notes[1], 'w/ pedal');
+    });
   });
 });
