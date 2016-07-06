@@ -13,7 +13,7 @@ describe('Genre API', function() {
     var app = express();
 
     // Bootstrap server
-    models = require('./models')(wagner);
+    var models = require('./models')(wagner);
     app.use(require('./api')(wagner));
 
     server = app.listen(3000);
@@ -50,9 +50,9 @@ describe('Genre API', function() {
         });
         assert.ok(result.genre);
         assert.equal(result.genre._id, 'New Age');
-        done();
       });
     });
+    done();
   });
 
   it('can load all genres that have a certain parent', function(done) {
@@ -77,8 +77,8 @@ describe('Genre API', function() {
         // Should be in ascending order by _id
         assert.equal(result.genres[0]._id, 'new sound');
         assert.equal(result.genres[1]._id, 'odd sound');
-        done();
-      });
+       });
     });
+    done();
   });
 });

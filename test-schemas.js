@@ -12,6 +12,7 @@ describe('Mongoose Schemas', function() {
   Student = models.Student;
   Piece = models.Piece;
   Lesson = models.Lesson;
+  //Product = models.Product;
 
   //var piece;
 
@@ -60,9 +61,9 @@ describe('Mongoose Schemas', function() {
         piece.validate(function(err) {
           assert.ok(err);
           assert.equal(err.errors['title'].kind, 'maxlength');
-          done();
         });
       });
+      done();
     });
 
     it('has an genre field that is a required string', function(done) {
@@ -74,13 +75,13 @@ describe('Mongoose Schemas', function() {
 
         piece._genre = 'Indian';
         assert.equal(piece._genre, 'Indian');
-        done();
       });
+      done();
     });
   });
 
   describe('Lesson', function() {
-    it('has a `notes` field containing array of strings', function() {
+    it('has a `notes` field containing array of strings', function(done) {
       var lesson = new Lesson({
         date: Date.now,
         notes: ['Record next week'],
@@ -92,6 +93,28 @@ describe('Mongoose Schemas', function() {
       assert.equal(lesson.notes.length, 2);
       assert.equal(lesson.notes[0], 'Record next week');
       assert.equal(lesson.notes[1], 'w/ pedal');
+      done();
     });
   });
+
+  //TODO
+  // describe('Product', function() {
+  //   it('has a `price.amount` subfield of type number', function() {
+  //     var product = new Product({
+  //       name: 'April Lesson 1',
+  //       price: {
+  //         amount: 'thirty',
+  //         currentcy: 'USD'
+  //       }
+  //     });
+
+  //     product.validate(function(err) {
+  //       assert.ok(err);
+  //       assert.equal(err.errors['price']['amount'].kind, 'type');
+  //       product.price.amount = 30;
+  //       assert.equal(product.price.amount, 30);
+  //       done();
+  //     });
+  //   });
+  // });
 });
