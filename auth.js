@@ -1,16 +1,17 @@
 var wagner = require('wagner-core');
+var session = require('express-session');
 
-function setupAuth(User, app) {
+function setupAuth(Student, app) {
   var passport = require('passport');
   var FacebookStrategy = require('passport-facebook').Strategy;
 
-  // serialize user instance to the session
-  passport.serializeUser(function(user, done) {
-    done(null, user._id);
+  // serialize student instance to the session
+  passport.serializeUser(function(student, done) {
+    done(null, student._id);
   });
-  //de-serialize user from the session
+  //de-serialize student from the session
   passport.deserializeUser(function(id, done) {
-    User.
+    Student.
       findOne({ _id : id }).
       exec(done);
   });
@@ -33,24 +34,26 @@ function setupAuth(User, app) {
         return done('No emails associated with this account!');
       }
 
-      User.findOneAndUpdate(
+      Student.findOneAndUpdate(
         { 'data.oauth': profile.id },
         {
           $set: {
-            'profile.username': profile.emails[0].value,
+            'profile.studentname': profile.emails[0].value,
             'profile.picture': 'http://graph.facebook.com/' +
               profile.id.toString() + '/picture?type=large'
           }
         },
         { 'new': true, upsert: true, runValidators: true },
-        function(error, user) {
-          done(error, user);
+        function(error, student) {
+          done(error, student);
         });
     }));
 
   // Express middlewares
-  app.use(require('express-session')({
-    secret: 'this is a secret'
+  app.use(session({
+    secret: 'this is a secret',
+    resave: false,
+    saveUninitialized: false
   }));
   app.use(passport.initialize());
   app.use(passport.session());
@@ -62,7 +65,7 @@ function setupAuth(User, app) {
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', { failureRedirect: '/fail' }),
     function(req, res) {
-      res.send('Welcome, ' + req.user.profile.username);
+      res.send('Welcome, ' + req.student.profile.studentname);
     });
 }
 
