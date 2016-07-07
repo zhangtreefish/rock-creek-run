@@ -9,6 +9,7 @@ var pieceSchema = new mongoose.Schema({
         years: String
     },
     _genre: {type: String, ref: 'Genre', required: true}, //TODO:what about genre: Genre.genreSchema?{type: genreSchema, ref: 'Genre'}
+    //genre: genreSchema,//TypeError: Undefined type `undefined` at `genre`;Did you try nesting Schemas? You can only nest using refs or arrays.
     arranger: String,
     book: {
         title: {type: String, required: true},
