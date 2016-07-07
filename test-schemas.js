@@ -30,20 +30,7 @@ describe('Mongoose Schemas', function() {
 
   describe('Piece', function() {
     it('has a title field that is a required string', function(done) {
-      var piece = new Piece({
-        // _id: "certain song",
-        // title: "Imagine",
-        // composer: {
-        //     name: 'J Lenon',
-        //     years: '1960?'
-        // },
-        // _genre: "Contemporary",
-
-        // book: {
-        //     title: "that book",
-        //     image: "http://i.imgur.com/yyR3ZmX.png"
-        // },
-      });
+      var piece = new Piece({});
 
       piece.validate(function(err) {
         assert.ok(err);

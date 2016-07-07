@@ -4,7 +4,7 @@
         "watch": "gulp watch",
         "check-credentials": "mocha part1.js",
         "test": "mocha -R xunit test.js",
-        "test-genre": "mocha test-genre.js",
+        "test-genre": "mocha -R nyan test-genre.js",
         "test-schemas": "mocha test-schemas.js",
         "test-interface": "mocha test-interface.js"
     },

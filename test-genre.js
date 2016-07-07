@@ -8,6 +8,7 @@ var URL_ROOT = 'http://localhost:3000';
 describe('Genre API', function() {
   var server;
   var Genre;
+  var Piece;
 
   before(function() {
     var app = express();
@@ -20,6 +21,7 @@ describe('Genre API', function() {
 
     // Make Genre model available in tests
     Genre = models.Genre;
+    Piece = models.Piece;
   });
 
   after(function() {
@@ -28,10 +30,13 @@ describe('Genre API', function() {
   });
 
   beforeEach(function(done) {
-    // Make sure genres are empty before each test
+    // Make sure categories are empty before each test
     Genre.remove({}, function(error) {
       assert.ifError(error);
-      done();
+      Piece.remove({}, function(error) {
+        assert.ifError(error);
+        done();
+      });
     });
   });
 
@@ -58,15 +63,15 @@ describe('Genre API', function() {
   it('can load all genres that have a certain parent', function(done) {
     var genres = [
       { _id: 'New Age' },
-      { _id: 'new sound', parent: 'New Age' },
-      { _id: 'odd sound', parent: 'New Age' },
+      { _id: 'new sound', parent: 'New_Age' },
+      { _id: 'odd sound', parent: 'New_Age' },
       { _id: 'Bacon' }
     ];
 
     // Create 4 genres
     Genre.create(genres, function(error, genres) {
-      var url = URL_ROOT + '/genre/parent/New Age';
-      // Make an HTTP request to localhost:3000/genre/parent/New Age
+      var url = URL_ROOT + '/genre/parent/New_Age';
+
       superagent.get(url, function(error, res) {
         assert.ifError(error);
         var result;
@@ -81,4 +86,38 @@ describe('Genre API', function() {
     });
     done();
   });
+  //TODO
+  // it('can load a piece by id', function(done) {
+  //   // Create a single piece
+  //   var PIECE_ID = 'first';
+  //   var piece = {
+  //     id: PIECE_ID,
+  //     title: "Imagine",
+  //     composer: {
+  //         name: 'J Lenon',
+  //         years: '1960?'
+  //     },
+  //     _genre: "Contemporary",
+  //     book: {
+  //         title: "that book",
+  //         image: "http://i.imgur.com/yyR3ZmX.png"
+  //     }
+  //   };
+  //   Piece.create(piece, function(error, doc) {
+  //     assert.ifError(error);
+  //     var url = URL_ROOT + '/piece/id/' + PIECE_ID;
+
+  //     superagent.get(url, function(error, res) {
+  //       assert.ifError(error);
+  //       var result;
+  //       assert.doesNotThrow(function() {
+  //         result = JSON.parse(res.text);
+  //       });
+  //       assert.ok(result.piece);
+  //       assert.equal(result.piece.id, PIECE_ID);
+  //       assert.equal(result.piece.title, 'Imagine');
+  //       done();
+  //     });
+  //   });
+  // });
 });

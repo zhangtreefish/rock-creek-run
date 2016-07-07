@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var genreSchema = require('./genre');
 
 var pieceSchema = new mongoose.Schema({
-    _id: {type: String, required: true},
+    id: {type: String, required: true},
     title: {type: String, maxlength: 140, required: true},
     composer: {
         name: {type: String, maxlength: 140, required: true},
