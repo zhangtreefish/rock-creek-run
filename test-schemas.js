@@ -53,15 +53,15 @@ describe('Mongoose Schemas', function() {
       done();
     });
 
-    it('has an genre field that is a required string', function(done) {
+    it('has an genre field that is a required genreSchema', function(done) {
       var piece = new Piece({});
 
       piece.validate(function(err) {
         assert.ok(err);
-        assert.equal(err.errors['_genre'].kind, 'required');
+        assert.equal(err.errors['genre'].kind, 'required');
 
-        piece._genre = 'Indian';
-        assert.equal(piece._genre, 'Indian');
+        piece.genre = 'Indian';
+        assert.equal(piece.genre, 'Indian');
       });
       done();
     });

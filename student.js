@@ -14,12 +14,12 @@ var studentSchema = new mongoose.Schema({
     }],
     data: {
         oauth: { type: String, required: true },
-        pieces: [pieceSchema],
-        lessons: [{type: mongoose.Schema.Types.ObjectId, ref: 'Lesson'}],
-        videos: [{type: String, match: /^http:\/\//i}],
+        pieces: [{type: mongoose.Schema.Types.ObjectId, ref: 'piece'}],
+        lessons: [lessonSchema],
         cart: [{
             product: {
-                type: mongoose.Schema.Types.ObjectId
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'product'
             },
             quantity: {
                 type: Number,
