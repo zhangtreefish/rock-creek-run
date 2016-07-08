@@ -2,10 +2,9 @@ var mongoose = require('mongoose');
 var studentSchema = require('./student');
 
 var lessonSchema = new mongoose.Schema({
-    student: studentSchema,
     date: {type: Date, default: Date.now, required: true},
-    title: {type: String, maxlength: 140, required: true},
-    book: {type: String, required: true},
+    student: {type: mongoose.Schema.Types.ObjectId, ref: 'student', required: true},
+    piece: {type: mongoose.Schema.Types.ObjectId, ref: 'piece', required: true},
     pages: [Number],
     notes: [{
         type: String,
