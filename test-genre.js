@@ -17,7 +17,7 @@ describe('Genre API', function() {
     var models = require('./models')(wagner);
     app.use(require('./api')(wagner));
 
-    server = app.listen(3000);
+    var server = app.listen(3000);
 
     // Make Genre model available in tests
     Genre = models.Genre;
@@ -87,37 +87,37 @@ describe('Genre API', function() {
     done();
   });
   //TODO
-  // it('can load a piece by id', function(done) {
-  //   // Create a single piece
-  //   var PIECE_ID = 'first';
-  //   var piece = {
-  //     id: PIECE_ID,
-  //     title: "Imagine",
-  //     composer: {
-  //         name: 'J Lenon',
-  //         years: '1960?'
-  //     },
-  //     _genre: "Contemporary",
-  //     book: {
-  //         title: "that book",
-  //         image: "http://i.imgur.com/yyR3ZmX.png"
-  //     }
-  //   };
-  //   Piece.create(piece, function(error, doc) {
-  //     assert.ifError(error);
-  //     var url = URL_ROOT + '/piece/id/' + PIECE_ID;
+  it('can load a piece by id', function(done) {
+    // Create a single piece
+    var PIECE_ID = '000000000000000000000001';
+    var piece = {
+      id: PIECE_ID,
+      title: "Imagine",
+      composer: {
+          name: 'J Lenon',
+          years: '1960?'
+      },
+      _genre: "Contemporary",
+      book: {
+          title: "that book",
+          image: "http://i.imgur.com/yyR3ZmX.png"
+      }
+    };
+    Piece.create(piece, function(error, doc) {
+      assert.ifError(error);
+      var url = URL_ROOT + '/piece/id/' + PIECE_ID;
 
-  //     superagent.get(url, function(error, res) {
-  //       assert.ifError(error);
-  //       var result;
-  //       assert.doesNotThrow(function() {
-  //         result = JSON.parse(res.text);
-  //       });
-  //       assert.ok(result.piece);
-  //       assert.equal(result.piece.id, PIECE_ID);
-  //       assert.equal(result.piece.title, 'Imagine');
-  //       done();
-  //     });
-  //   });
-  // });
+      superagent.get(url, function(error, res) {
+        assert.ifError(error);
+        var result;
+        assert.doesNotThrow(function() {
+          result = JSON.parse(res.text);
+        });
+        assert.ok(result.piece);
+        assert.equal(result.piece.id, PIECE_ID);
+        assert.equal(result.piece.title, 'Imagine');
+        done();
+      });
+    });
+  });
 });
