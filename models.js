@@ -4,7 +4,7 @@ var pieceSchema = require('./piece');
 var studentSchema = require('./student');
 var lessonSchema = require('./lesson');
 var genreSchema = require('./genre');
-var productModel = require('./product');
+var productSchema = require('./product');
 
 module.exports = function(wagner) {
   mongoose.connect('mongodb://localhost:27017/test');
@@ -19,12 +19,13 @@ module.exports = function(wagner) {
     mongoose.model('Student', studentSchema, 'students');
   var Piece = mongoose.model('Piece', pieceSchema, 'pieces');
   var Lesson = mongoose.model('Lesson', lessonSchema, 'lessons');
+  var Product = mongoose.model('Product', productSchema, 'products');
 
   var models = {
     Genre: Genre,
     Student: Student,
     Piece: Piece,
-    Product: productModel,
+    Product: Product,
     Lesson: Lesson
   };
 

@@ -54,6 +54,17 @@
             "arranger": "",
             "book": "Star Wars, Music by John Williams",
             "pages": [12, 15]
+        },
+        {
+            "title": "the next",
+            "composer": {
+                "name": "who",
+                "years": "this year"
+            },
+            "genre": "Contemporary",
+            "arranger": "",
+            "book": "that book",
+            "pages": [1, 100]
         }
     ]
 }
