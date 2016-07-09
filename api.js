@@ -1,6 +1,7 @@
 var express = require('express');
 var status = require('http-status');
 var bodyparser = require('body-parser');
+var _ = require('underscore');
 
 function handleOne(property, res, error, result) {
   if (error) {
@@ -99,8 +100,8 @@ module.exports = function(wagner) {
           json({ error: 'No cart specified!' });
       }
 
-      req.user.data.cart = cart;
-      req.user.save(function(error, student) {
+      req.student.data.cart = cart;
+      req.student.save(function(error, student) {
         if (error) {
           return res.
             status(status.INTERNAL_SERVER_ERROR).
@@ -112,69 +113,69 @@ module.exports = function(wagner) {
   }));
 
   api.get('/me', function(req, res) {
-    if (!req.user) {
+    if (!req.student) {
       return res.
         status(status.UNAUTHORIZED).
         json({ error: 'Not logged in' });
     }
 
-    req.user.populate(
+    req.student.populate(
       { path: 'data.cart.product', model: 'Product' },
       handleOne.bind(null, 'student', res));
   });
 
-  // api.post('/checkout', wagner.invoke(function(User, Stripe) {
-  //   return function(req, res) {
-  //     if (!req.student) {
-  //       return res.
-  //         status(status.UNAUTHORIZED).
-  //         json({ error: 'Not logged in' });
-  //     }
+  api.post('/checkout', wagner.invoke(function(Student, Stripe) {
+    return function(req, res) {
+      if (!req.student) {
+        return res.
+          status(status.UNAUTHORIZED).
+          json({ error: 'Not logged in' });
+      }
 
-  //     // Populate the products in the student's cart
-  //     req.student.populate({ path: 'data.cart.product', model: 'Product' }, function(error, student) {
+      // Populate the products in the student's cart
+      req.student.populate({ path: 'data.cart.product', model: 'Product' }, function(error, student) {
 
-  //       // Sum up the total price in USD
-  //       var totalCostUSD = 0;
-  //       _.each(student.data.cart, function(item) {
-  //         totalCostUSD += item.product.internal.approximatePriceUSD *
-  //           item.quantity;
-  //       });
+        // Sum up the total price in USD
+        var totalCostUSD = 0;
+        _.each(student.data.cart, function(item) {
+          totalCostUSD += item.product.internal.approximatePriceUSD *
+            item.quantity;
+        });
 
-  //       // And create a charge in Stripe corresponding to the price
-  //       Stripe.charges.create(
-  //         {
-  //           // Stripe wants price in cents, so multiply by 100 and round up
-  //           amount: Math.ceil(totalCostUSD * 100),
-  //           currency: 'usd',
-  //           source: req.body.stripeToken,
-  //           description: 'Example charge'
-  //         },
-  //         function(err, charge) {
-  //           if (err && err.type === 'StripeCardError') {
-  //             return res.
-  //               status(status.BAD_REQUEST).
-  //               json({ error: err.toString() });
-  //           }
-  //           if (err) {
-  //             console.log(err);
-  //             return res.
-  //               status(status.INTERNAL_SERVER_ERROR).
-  //               json({ error: err.toString() });
-  //           }
+        // And create a charge in Stripe corresponding to the price
+        Stripe.charges.create(
+          {
+            // Stripe wants price in cents, so multiply by 100 and round up
+            amount: Math.ceil(totalCostUSD * 100),
+            currency: 'usd',
+            source: req.body.stripeToken,
+            description: 'Example charge'
+          },
+          function(err, charge) {
+            if (err && err.type === 'StripeCardError') {
+              return res.
+                status(status.BAD_REQUEST).
+                json({ error: err.toString() });
+            }
+            if (err) {
+              console.log(err);
+              return res.
+                status(status.INTERNAL_SERVER_ERROR).
+                json({ error: err.toString() });
+            }
 
-  //           req.student.data.cart = [];
-  //           req.student.save(function() {
-  //             // Ignore any errors - if we failed to empty the student's
-  //             // cart, that's not necessarily a failure
+            req.student.data.cart = [];
+            req.student.save(function() {
+              // Ignore any errors - if we failed to empty the student's
+              // cart, that's not necessarily a failure
 
-  //             // If successful, return the charge id
-  //             return res.json({ id: charge.id });
-  //           });
-  //         });
-  //     });
-  //   };
-  // }));
+              // If successful, return the charge id
+              return res.json({ id: charge.id });
+            });
+          });
+      });
+    };
+  }));
 
 
   return api;

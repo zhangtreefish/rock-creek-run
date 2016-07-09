@@ -12,22 +12,25 @@ describe('Student API', function() {
   var Genre;
   var Product;
   var Student;
+  var Stripe;
 
   before(function() {
     var app = express();
 
     // Bootstrap server
     var models = require('./models')(wagner);
+    var dependencies = require('./dependencies')(wagner);
 
     // Make models available in tests
     Genre = models.Genre;
     Product = models.Product;
     Student = models.Student;
+    Stripe = dependencies.Stripe;
 
     app.use(function(req, res, next) {
       Student.findOne({}, function(error, student) {
         assert.ifError(error);
-        req.user = student;
+        req.student = student;
         next();
       });
     });

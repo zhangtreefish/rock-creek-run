@@ -23,7 +23,8 @@
         "passport-facebook": "2.0.0",
         "stripe": "3.3.4",
         "superagent": "1.2.0",
-        "wagner-core": "0.1.0"
+        "wagner-core": "0.1.0",
+        "stripe": "3.3.4"
     },
     "devDependencies": {
         "gulp": "3.8.11",
