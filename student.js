@@ -5,7 +5,18 @@ var lessonSchema = require('./lesson');
 
 var studentSchema = new mongoose.Schema({
     _id: Number,
-    name: { type: String, required: true },
+    profile: {
+        username: {
+          type: String,
+          required: true,
+          lowercase: true
+        },
+        picture: {
+          type: String,
+          required: true,
+          match: /^http:\/\//i
+        }
+    },
     schedule: [{
         length: Number,
         day: String,
@@ -31,12 +42,12 @@ var studentSchema = new mongoose.Schema({
 });
 
 studentSchema.virtual('firstName').get(function() {
-    var split = this.name.split(' ');
+    var split = this.profile.username.split(' ');
     return split[0];
 });
 
 studentSchema.virtual('lastName').get(function() {
-    var split = this.name.split(' ');
+    var split = this.profile.username.split(' ');
     return split.splice(-1).pop();
 });
 

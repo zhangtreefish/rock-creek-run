@@ -17,14 +17,21 @@ describe('Mongoose Schemas', function() {
   //var piece;
 
   describe('Student', function() {
+    var student = new Student(
+      { profile:
+        {
+          username: 'hay rue forest',
+          picture: 'http://i.imgur.com/yyR3ZmX.png'
+        }
+      });
+
     it('has a `firstName` virtual', function() {
-      var student = new Student({ name: 'Hay Rue Forest' });
-      assert.equal(student.firstName, 'Hay');
+      assert.equal(student.firstName, 'hay');
     });
 
     it('has a `lastName` virtual', function() {
-      var student = new Student({ name: 'Dun Dee Land' });
-      assert.equal(student.lastName, 'Land');
+      student.profile.username = 'dun dee land';
+      assert.equal(student.lastName, 'land');
     });
   });
 
@@ -60,8 +67,8 @@ describe('Mongoose Schemas', function() {
         assert.ok(err);
         assert.equal(err.errors['genre'].kind, 'required');
 
-        piece.genre = 'Indian';
-        assert.equal(piece.genre, 'Indian');
+        piece.genre = 'Baroque';
+        assert.equal(piece.genre, 'Baroque');
       });
       done();
     });
