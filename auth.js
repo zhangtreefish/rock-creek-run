@@ -4,7 +4,10 @@ var session = require('express-session');
 function setupAuth(Student, app) {
   var passport = require('passport');
   var FacebookStrategy = require('passport-facebook').Strategy;
-
+  //Passport will maintain persistent login sessions. In order
+  //for persistent sessions to work, the authenticated user
+  //must be serialized to the session, and deserialized
+  //when subsequent requests are made.
   // serialize student instance to the session
   passport.serializeUser(function(student, done) {
     done(null, student._id);
@@ -22,7 +25,7 @@ function setupAuth(Student, app) {
       })
   passport.use(new FacebookStrategy(
     {
-      // use the Config service instead of process.env.FACEBOOK_CLIENT_SECRET
+      // use the Config service, in lieu of process.env
       clientID: fb_auth.facebookClientId,
       clientSecret: fb_auth.facebookClientSecret,
       callbackURL: 'http://localhost:3000/auth/facebook/callback',
@@ -38,7 +41,7 @@ function setupAuth(Student, app) {
         { 'data.oauth': profile.id },
         {
           $set: {
-            'profile.studentname': profile.emails[0].value,
+            'profile.username': profile.emails[0].value,
             'profile.picture': 'http://graph.facebook.com/' +
               profile.id.toString() + '/picture?type=large'
           }
