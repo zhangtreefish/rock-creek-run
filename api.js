@@ -3,35 +3,6 @@ var status = require('http-status');
 var bodyparser = require('body-parser');
 var _ = require('underscore');
 
-function handleOne(property, res, error, result) {
-  if (error) {
-    return res.
-      status(status.INTERNAL_SERVER_ERROR).
-      json({ error: error.toString() });
-  }
-  if (!result) {
-    return res.
-      status(status.NOT_FOUND).
-      json({ error: 'Result not found' });
-  }
-
-  var json = {};
-  json[property] = result;
-  res.json(json);
-}
-
-function handleMany(property, res, error, result) {
-  if (error) {
-    return res.
-      status(status.INTERNAL_SERVER_ERROR).
-      json({ error: error.toString() });
-  }
-
-  var json = {};
-  json[property] = result;
-  res.json(json);
-}
-
 module.exports = function(wagner) {
   var api = express.Router();
 
@@ -83,6 +54,18 @@ module.exports = function(wagner) {
       Piece.
         find({ 'genre.ancestors': req.params.id }).
         // sort(sort).
+        exec(handleMany.bind(null, 'pieces', res));
+    };
+  }));
+
+api.get('/piece/text/:query', wagner.invoke(function(Piece) {
+    return function(req, res) {
+      Piece.
+        find(
+          { $text : { $search : req.params.query } },
+          { score : { $meta: 'textScore' } }).
+        sort({ score: { $meta : 'textScore' } }).
+        limit(10).
         exec(handleMany.bind(null, 'pieces', res));
     };
   }));
@@ -177,7 +160,35 @@ module.exports = function(wagner) {
     };
   }));
 
-
   return api;
 };
+
+function handleOne(property, res, error, result) {
+  if (error) {
+    return res.
+      status(status.INTERNAL_SERVER_ERROR).
+      json({ error: error.toString() });
+  }
+  if (!result) {
+    return res.
+      status(status.NOT_FOUND).
+      json({ error: 'Result not found' });
+  }
+
+  var json = {};
+  json[property] = result;
+  res.json(json);
+}
+
+function handleMany(property, res, error, result) {
+  if (error) {
+    return res.
+      status(status.INTERNAL_SERVER_ERROR).
+      json({ error: error.toString() });
+  }
+
+  var json = {};
+  json[property] = result;
+  res.json(json);
+}
 

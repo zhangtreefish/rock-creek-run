@@ -32,8 +32,6 @@ var fx = require('./fx');
 
   // var productSchema = new mongoose.Schema(productSchema);
 
-  productSchema.index({ name: 'text' });
-
   var currencySymbols = {
     'USD': '$',
     'EUR': '€',

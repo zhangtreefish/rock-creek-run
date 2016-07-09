@@ -19,4 +19,6 @@ var pieceSchema = new mongoose.Schema({
     videos: [{type: String, match: /^http:\/\//i}]
 });
 
+pieceSchema.index({ title: 'text' });
+
 module.exports = pieceSchema;

@@ -36,7 +36,5 @@ module.exports = function(wagner) {
     });
   });
 
-  //wagner.factory('Product', productModel);
-
   return models;
 };
