@@ -7,7 +7,7 @@
         "test-genre": "mocha -R nyan test-genre.js",
         "test-schemas": "mocha test-schemas.js",
         "test-interface": "mocha test-interface.js",
-        "test-studentAPI": "mocha -R nyan test-student.js"
+        "test-api": "mocha -R nyan test-student.js"
     },
     "dependencies": {
         "underscore": "1.8.3",

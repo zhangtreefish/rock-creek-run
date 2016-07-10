@@ -29,12 +29,12 @@ RUNNING
     $ ./mongod
     $
     $ # The mongo javascript shell connects to localhost and test database by default:
-    $ ./mongo 
+    $ ./mongo
     > help
 
 DRIVERS
 
-  Client drivers for most programming languages are available at mongodb.org.  Use the 
+  Client drivers for most programming languages are available at mongodb.org.  Use the
   shell ("mongo") for administrative tasks.
 
 DOCUMENTATION
@@ -50,3 +50,9 @@ MAIL LISTS AND IRC
   MongoDB uses memory mapped files.  If built as a 32 bit executable, you will
   not be able to work with large (multi-gigabyte) databases.  However, 32 bit
   builds work fine with small development databases.
+
+## To run Mocha in debugger mode:
+-- Add inside package.json:"test-api": "mocha -R nyan test-student.js --debug-brk"
+-- At a separate terminal, run 'node-inspector'
+-- Go to http://127.0.0.1:8080/debug?port=5858 in Chrome.
+-- At the project directory, run 'npm run test-api' to launch test-student.js.

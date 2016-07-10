@@ -39,7 +39,7 @@ module.exports = function(wagner) {
         });
     };
   }));
-//piece api, use id =000000000000000000000001
+  //piece api, use id =000000000000000000000001
   api.get('/piece/id/:id', wagner.invoke(function(Piece) {
     return function(req, res) {
       Piece.findOne({ _id: req.params.id },
@@ -47,18 +47,16 @@ module.exports = function(wagner) {
     };
   }));
 
+  // TODO: for sorting:var sort = { composer.name: 1 };// sort(sort).
   api.get('/piece/genre/:id', wagner.invoke(function(Piece) {
     return function(req, res) {
-      // var sort = { composer.name: 1 };
-
       Piece.
         find({ 'genre.ancestors': req.params.id }).
-        // sort(sort).
         exec(handleMany.bind(null, 'pieces', res));
     };
   }));
 
-api.get('/piece/text/:query', wagner.invoke(function(Piece) {
+  api.get('/piece/text/:query', wagner.invoke(function(Piece) {
     return function(req, res) {
       Piece.
         find(

@@ -95,7 +95,7 @@ describe('API', function() {
     }
   ];
 
-  before(function() {
+  before('setup', function() {
     var app = express();
 
     // Bootstrap server
@@ -122,12 +122,12 @@ describe('API', function() {
     server = app.listen(3000);
   });
 
-  after(function() {
+  after('close', function() {
     // Shut the server down when we're done
     server.close();
   });
 
-  beforeEach(function(done) {
+  beforeEach('remove', function(done) {
     // Make sure categories are empty before each test
     Product.remove({}, function(error) {
       assert.ifError(error);
@@ -343,5 +343,54 @@ describe('API', function() {
         });
       });  // Piece
     });  //Genre
+  });
+
+  it('can check out', function(done) {
+    var url = URL_ROOT + '/checkout';
+
+    // Set up data
+    Student.findOne({}, function(error, student) {
+      assert.ifError(error);
+      student.data.cart = [{ product: PRODUCT_ID, quantity: 1 }];
+      student.save(function(error) {
+        assert.ifError(error);
+
+        // Attempt to check out by posting to /api/v1/checkout
+        superagent.
+          post(url).
+          send({
+            // Fake stripe credentials. stripeToken can either be
+            // real credit card credentials or an encrypted token -
+            // in production it will be an encrypted token.
+            stripeToken: {
+              number: '4242424242424242',
+              cvc: '123',
+              exp_month: '12',
+              exp_year: '2016'
+            }
+          }).
+          end(function(error, res) {
+            assert.ifError(error);
+
+            assert.equal(res.status, 200);
+            var result;
+            assert.doesNotThrow(function() {
+              result = JSON.parse(res.text);
+            });
+
+            // API call gives us back a charge id.
+            assert.ok(result.id);
+
+            // Make sure stripe got the id
+            Stripe.charges.retrieve(result.id, function(error, charge) {
+              assert.ifError(error);
+              assert.ok(charge);
+              assert.equal(charge.amount, 2000 * 100); // 2000 USD
+              // done();//Error: timeout of 2000ms exceeded. Ensure the done() callback is being called
+            });
+          });
+      });
+    });
+    done();
   });
 });
