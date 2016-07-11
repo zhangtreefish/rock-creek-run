@@ -9,8 +9,8 @@ function setupAuth(Student, app) {
   //must be serialized to the session, and deserialized
   //when subsequent requests are made.
   // serialize student instance to the session
-  passport.serializeUser(function(student, done) {
-    done(null, student._id);
+  passport.serializeUser(function(user, done) {
+    done(null, user._id);
   });
   //de-serialize student from the session
   passport.deserializeUser(function(id, done) {
@@ -68,7 +68,7 @@ function setupAuth(Student, app) {
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', { failureRedirect: '/fail' }),
     function(req, res) {
-      res.send('Welcome, ' + req.student.profile.studentname);
+      res.send('Welcome, ' + req.student.profile.username);
     });
 }
 
