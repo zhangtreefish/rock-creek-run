@@ -100,10 +100,10 @@ module.exports = function(wagner) {
         json({ error: 'Not logged in' });
     }
 
-    // res.json({ student: req.student });
-    req.student.populate(
-      { path: 'data.cart.product', model: 'Product' },
-      handleOne.bind(null, 'student', res));
+    res.json({ student: req.student });
+    // req.student.populate(
+    //   { path: 'data.cart.product', model: 'Product' },
+    //   handleOne.bind(null, 'student', res));
   });
 
   api.post('/checkout', wagner.invoke(function(Student, Stripe) {

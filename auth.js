@@ -9,8 +9,8 @@ function setupAuth(Student, app) {
   //must be serialized to the session, and deserialized
   //when subsequent requests are made.
   // serialize student instance to the session
-  passport.serializeUser(function(user, done) {
-    done(null, user._id);
+  passport.serializeUser(function(student, done) {
+    done(null, student._id);
   });
   //de-serialize student from the session
   passport.deserializeUser(function(id, done) {
@@ -22,7 +22,7 @@ function setupAuth(Student, app) {
   // Facebook-specific
   var fb_auth = wagner.invoke(function(Config) {
         return Config;
-      })
+      });
   passport.use(new FacebookStrategy(
     {
       // use the Config service, in lieu of process.env
@@ -68,7 +68,7 @@ function setupAuth(Student, app) {
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', { failureRedirect: '/fail' }),
     function(req, res) {
-      res.send('Welcome, ' + req.student.profile.username);
+      res.send('Welcome, ' + req.user.profile.username);
     });
 }
 

@@ -4,7 +4,6 @@ var pieceSchema = require('./piece');
 var lessonSchema = require('./lesson');
 
 var studentSchema = new mongoose.Schema({
-    _id: Number,
     profile: {
         username: {
           type: String,
